@@ -1,0 +1,72 @@
+version: 2
+
+models:
+  - name: fct_job_postings
+    description: "Job posting fact model with normalized job, company, location, salary, and schedule attributes."
+    columns:
+      - name: job_id
+        description: "Identifier for the job posting."
+        data_tests:
+          - not_null
+      - name: job_title
+        description: "Title of the job posting."
+      - name: company_name
+        description: "Name of the company offering the job."
+      - name: job_location
+        description: "Location associated with the job posting."
+      - name: source_platform
+        description: "Platform where the job posting was listed."
+      - name: job_posted_at
+        description: "Date or relative date when the job was posted."
+      - name: currency
+        description: "Currency used for the salary amounts."
+      - name: salary_period
+        description: "Interval associated with the salary amounts."
+      - name: salary_min
+        description: "Minimum salary amount."
+      - name: salary_max
+        description: "Maximum salary amount."
+      - name: job_schedule_type
+        description: "Schedule type associated with the job posting."
+      - name: job_work_from_home
+        description: "Whether the job supports working from home."
+  - name: dim_company
+    description: "Company-level summary of job posting counts and yearly USD salary averages."
+    columns:
+      - name: company_name
+        description: "Company name; each row represents one company."
+      - name: total_job_postings
+        description: "Number of job postings for the company."
+      - name: avg_salary_min_usd_per_year
+        description: "Average minimum salary for USD-denominated annual postings."
+      - name: avg_salary_max_usd_per_year
+        description: "Average maximum salary for USD-denominated annual postings."
+  - name: dim_skills
+    description: "Skill taxonomy enriched with observed job-posting counts."
+    columns:
+      - name: skill_id
+        description: "Unique identifier for the skill."
+        data_tests:
+          - not_null
+          - unique
+      - name: display_name
+        description: "Human-readable display name for the skill."
+      - name: category
+        description: "Top-level category assigned to the skill."
+      - name: subcategory
+        description: "Subcategory assigned to the skill."
+      - name: postings_with_skill
+        description: "Number of distinct job postings observed with the skill."
+  - name: bridge_job_skills
+    description: "Associative model linking job postings in the fact table to their observed skills."
+    columns:
+      - name: job_id
+        description: "Identifier for a job posting included in the fact table."
+        data_tests:
+          - not_null
+      - name: skill_id
+        description: "Identifier for a skill observed for the job posting."
+        data_tests:
+          - not_null
+      - name: skill_keyword
+        description: "Observed skill keyword associated with the job posting."

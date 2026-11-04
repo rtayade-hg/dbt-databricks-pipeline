@@ -1,0 +1,11 @@
+seeds:
+  - name: skill_categories
+    columns:
+      - name: skill_id
+        description: Skill key; joins stg_job_skills and anchors dim_skill's PK.
+      - name: display_name
+        description: Human-readable skill name ('PostgreSQL', not 'postgresql').
+      - name: category
+        description: Top-level rollup (Programming, Cloud, Applications, ...).
+      - name: subcategory
+        description: Finer rollup within the category.
