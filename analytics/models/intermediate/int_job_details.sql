@@ -31,7 +31,7 @@ cleaned_jobs AS (
         -- Jinja: Dynamically generate columns with for loop for each extension keyword
         {% for keyword in extension_keywords %}
         ARRAY_CONTAINS(job_extensions,'{{ keyword }}'
-        ) AS has_{{ keyword | lower | replace(' ', '_') }}{% if not loop.last %},{% endif %}
+        ) AS has_{{ slugify(keyword) }}{% if not loop.last %},{% endif %}
         {% endfor %}
     FROM parsed
 )
