@@ -1,24 +1,18 @@
-version: 2
-
 models:
-  - name: int_job_details
-    description: "Intermediate model that enriches job postings with k arrangement indicators."
+  - name: int_skill_observations
+    description: >
+      One row per skill_id observed in the raw skill rows: the "do the thinking once"
+      layer re-grains 3,304,574 (job, skill keyword) rows into per-skill demand counts.
+      Aggregates staging, not the star, so the counts would include orphan rows whose
+      job never made fct (0 today). Observed in the wild, documented rather than hidden.
+      dim_skill joins these counts onto the seed taxonomy and serves them.
     columns:
-      - name: job_id
-        description: "Unique identifier for the job posting."
-      - name: job_title
-        description: "Title of the job posting."
-      - name: company_name
-        description: "Name of the company offering the job."
-      - name: job_location
-        description: "Location of the job posting."
-      - name: job_work_from_home
-        description: "Whether the job supports remote or hybrid work arrangements."
-      - name: degree_mentioned
-        description: "Flag indicating whether the job listing explicitly mentions no degree requirement."
-      - name: has_health_insurance
-        description: "Whether the job listing includes health insurance as a benefit."
-      - name: has_dental_insurance
-        description: "Whether the job listing includes dental insurance as a benefit."
-      - name: has_paid_time_off
-        description: "Whether the job listing includes paid time off as a benefit."
+      - name: skill_id
+        description: Skill key; the grain.
+        data_tests:
+          - not_null
+          - unique
+      - name: postings_with_skill
+        description: >
+          Distinct jobs observed with this skill in staging. Orphan rows would count
+          here by design; there are 0 today.

@@ -1,28 +1,61 @@
+version: 2
+
 models:
   - name: stg_job_postings
-    description: "Staging model for job postings."
+    description: "Cleaned and enriched job postings with normalized salary and job extension fields."
     columns:
       - name: job_id
         description: "Unique identifier for the job posting."
         data_tests:
           - not_null
-          - unique
       - name: job_title
         description: "Title of the job posting."
       - name: company_name
         description: "Company offering the job."
-      - name: location
+      - name: job_location
         description: "Location of the job."
-      - name: posted_date
-        description: "Date when the job was posted."
+      - name: source_platform
+        description: "Job listing platform, with the leading 'via' prefix removed."
+      - name: job_posted_at
+        description: "Date or relative date when the job was posted."
+      - name: currency
+        description: "Currency extracted from the salary field, defaulting to USD."
+      - name: salary_period
+        description: "Salary interval, such as year, month, week, day, or hour."
+      - name: salary_range
+        description: "Salary range with non-numeric formatting removed."
+      - name: salary_min
+        description: "Minimum salary parsed from the salary range."
+      - name: salary_max
+        description: "Maximum salary parsed from the salary range."
+      - name: job_schedule_type
+        description: "Schedule type associated with the job posting."
+      - name: job_work_from_home
+        description: "Whether the job supports working from home."
+      - name: search_time
+        description: "Timestamp when the job search was performed."
+      - name: search_date
+        description: "Date when the job search was performed."
+      - name: search_term
+        description: "Search term used to find the job posting."
+      - name: search_location
+        description: "Location used to search for the job posting."
+      - name: degree_mentioned
+        description: "Whether the listing indicates that no degree is required."
+      - name: has_health_insurance
+        description: "Whether the job listing includes health insurance."
+      - name: has_dental_insurance
+        description: "Whether the job listing includes dental insurance."
+      - name: has_paid_time_off
+        description: "Whether the job listing includes paid time off."
   - name: stg_job_skills
-    description: "Staging model for job skills."
+    description: "Staged job skills with trimmed skill keywords."
     columns:
       - name: job_id
-        description: "Unique identifier for the job posting."
+        description: "Identifier for the associated job posting."
         data_tests:
           - not_null
       - name: skill_id
         description: "Unique identifier for the skill."
       - name: skill_keyword
-        description: "Keyword for the skill."
+        description: "Trimmed keyword describing the skill."

@@ -18,3 +18,5 @@ models:
     intermediate:
       +materialized: view
       +schema: int
+flags:
+  require_generic_test_arguments_property: true
