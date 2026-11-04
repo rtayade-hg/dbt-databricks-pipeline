@@ -2,6 +2,7 @@ Select
     job_id,
     job_title,
     company_name,
+    search_term,
     job_location,
     source_platform,
     job_posted_at,
