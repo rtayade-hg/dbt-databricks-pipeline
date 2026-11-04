@@ -68,5 +68,9 @@ models:
         description: "Identifier for a skill observed for the job posting."
         data_tests:
           - not_null
+          - relationships:
+              arguments: 
+                to: ref('dim_skills')
+                field: skill_id
       - name: skill_keyword
         description: "Observed skill keyword associated with the job posting."

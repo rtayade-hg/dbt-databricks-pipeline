@@ -30,6 +30,12 @@ models:
         description: "Maximum salary parsed from the salary range."
       - name: job_schedule_type
         description: "Schedule type associated with the job posting."
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['Full-time', 'Part-time', 'Contract', 'Temporary', 'Internship', 'Commission', 'Volunteer', 'Other']
+              config:
+                severity: WARN ## Additional columns for enrichment as by default we have error and no models are built if any of the tests fail.
       - name: job_work_from_home
         description: "Whether the job supports working from home."
       - name: search_time
@@ -38,6 +44,10 @@ models:
         description: "Date when the job search was performed."
       - name: search_term
         description: "Search term used to find the job posting."
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['Data Engineer', 'Data Scientist', 'Data Analyst', 'Machine Learning Engineer', 'Business Intelligence Analyst']
       - name: search_location
         description: "Location used to search for the job posting."
       - name: degree_mentioned
