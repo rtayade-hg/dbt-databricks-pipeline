@@ -1,0 +1,24 @@
+version: 2
+
+models:
+  - name: int_job_details
+    description: "Intermediate model that enriches job postings with k arrangement indicators."
+    columns:
+      - name: job_id
+        description: "Unique identifier for the job posting."
+      - name: job_title
+        description: "Title of the job posting."
+      - name: company_name
+        description: "Name of the company offering the job."
+      - name: job_location
+        description: "Location of the job posting."
+      - name: job_work_from_home
+        description: "Whether the job supports remote or hybrid work arrangements."
+      - name: degree_mentioned
+        description: "Flag indicating whether the job listing explicitly mentions no degree requirement."
+      - name: has_health_insurance
+        description: "Whether the job listing includes health insurance as a benefit."
+      - name: has_dental_insurance
+        description: "Whether the job listing includes dental insurance as a benefit."
+      - name: has_paid_time_off
+        description: "Whether the job listing includes paid time off as a benefit."

@@ -1,0 +1,23 @@
+models:
+  - name: stg_job_postings
+    description: "Staging model for job postings."
+    columns:
+      - name: job_id
+        description: "Unique identifier for the job posting."
+      - name: job_title
+        description: "Title of the job posting."
+      - name: company_name
+        description: "Company offering the job."
+      - name: location
+        description: "Location of the job."
+      - name: posted_date
+        description: "Date when the job was posted."
+  - name: stg_job_skills
+    description: "Staging model for job skills."
+    columns:
+      - name: job_id
+        description: "Unique identifier for the job posting."
+      - name: skill_id
+        description: "Unique identifier for the skill."
+      - name: skill_keyword
+        description: "Keyword for the skill."
