@@ -3,15 +3,26 @@ version: 2
 models:
   - name: fct_job_postings
     description: "Job posting fact model with normalized job, company, location, salary, and schedule attributes."
+    config:
+      meta:
+        owner: "Data Engineering Team"
+        tier: gold
     columns:
       - name: job_id
         description: "Identifier for the job posting."
         data_tests:
           - not_null
+          - unique
       - name: job_title
         description: "Title of the job posting."
       - name: company_name
         description: "Name of the company offering the job."
+        data_tests:
+          - not_null
+          - relationships:
+              arguments: 
+                to: ref('dim_company')
+                field: company_name
       - name: job_location
         description: "Location associated with the job posting."
       - name: source_platform
@@ -35,6 +46,9 @@ models:
     columns:
       - name: company_name
         description: "Company name; each row represents one company."
+        data_tests:
+          - not_null
+          - unique
       - name: total_job_postings
         description: "Number of job postings for the company."
       - name: avg_salary_min_usd_per_year
@@ -64,6 +78,10 @@ models:
         description: "Identifier for a job posting included in the fact table."
         data_tests:
           - not_null
+          - relationships:
+              arguments: 
+                to: ref('fct_job_postings')
+                field: job_id
       - name: skill_id
         description: "Identifier for a skill observed for the job posting."
         data_tests:

@@ -26,8 +26,12 @@ models:
         description: "Salary range with non-numeric formatting removed."
       - name: salary_min
         description: "Minimum salary parsed from the salary range."
+        data_tests:
+          - not_negative
       - name: salary_max
         description: "Maximum salary parsed from the salary range."
+        data_tests:
+          - not_negative
       - name: job_schedule_type
         description: "Schedule type associated with the job posting."
         data_tests:
