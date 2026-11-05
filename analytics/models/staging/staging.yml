@@ -73,3 +73,23 @@ models:
         description: "Unique identifier for the skill."
       - name: skill_keyword
         description: "Trimmed keyword describing the skill."
+
+unit_tests:
+  - name: test_parse_salary_shape
+    description: "Test to handle a range, a single value."
+    model: stg_job_postings
+    given:
+      - input: source('jobs', 'raw_job_postings')
+        rows: 
+          - {job_id: 1, job_salary: "50,000 – 70,000 a year"}
+          - {job_id: 2, job_salary: "60K a year"}
+          - {job_id: 3, job_salary: "32.50 an hour"}
+          - {job_id: 4, job_salary: "120K–160K a year"}
+          - {job_id: 5, job_salary: null}
+    expect:
+      rows:
+        - {job_id: 1, salary_min: 50000, salary_max: 70000}
+        - {job_id: 2, salary_min: 60000, salary_max: 60000}
+        - {job_id: 3, salary_min: 32.50, salary_max: 32.50}
+        - {job_id: 4, salary_min: 120000, salary_max: 160000}
+        - {job_id: 5, salary_min: null, salary_max: null}
