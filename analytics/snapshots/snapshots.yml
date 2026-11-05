@@ -1,0 +1,26 @@
+snapshots:
+  - name: job_postings_snapshot
+    description: >
+      SCD2 history of posting content: one row per (job_id, version), with
+      dbt_valid_from/to carrying data time via updated_at. New version only
+      when a check_cols column changes; current row has dbt_valid_to null.
+      Queried by analyses/top_posting_editors.sql and analyses/salary_swings.sql.
+    relation: ref('stg_job_postings_current')
+    config:
+      schema: snapshots
+      unique_key: job_id
+      strategy: check ## To check the difference in columns listed, we use the check strategy
+      check_cols:
+        - job_title
+        - company_name
+        - job_location
+        - job_schedule_type
+        - job_work_from_home
+        - salary_min
+        - salary_max
+        - currency
+        - has_health_insurance
+        - has_dental_insurance
+        - has_paid_time_off
+        - degree_mentioned
+      updated_at: search_time
